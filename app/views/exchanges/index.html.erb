@@ -1,0 +1,39 @@
+<div>
+  <div>
+    <h1>CurrencyExchange</h1>
+    <p>
+      <%= link_to "Create new exchange", new_exchange_path %>
+    </p>
+  </div>
+  <% if current_user.exchanges.count > 0 %>
+  <div>
+    <h2>Your exchanges</h2>
+    <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Exchange Currency</th>
+        <th>Created at</th>
+        <th>Rate</th>
+        <th>Result</th>
+      </tr>
+      </thead>
+      <% @collection.each do |f| %>
+        <% if f.user_id == current_user.id %>
+          <tbody>
+            <tr>
+              <td><%="#{f.amount} #{f.base_currency}"%></td>
+              <td><%= f.exchange_currency %></td>
+              <td><%= f.created_at.to_datetime.strftime("%Y-%m-%d") %></td>
+              <td><%= f.api_response[f.exchange_currency] %></td>
+              <td><%= f.api_response[f.exchange_currency].to_f * f.amount %></td>
+              <td><%= link_to "View", exchange_path(f) %></td>
+              <td><%= link_to "Edit", edit_exchange_path(f) %></td>
+              <td><%= link_to "Delete", exchange_path(f), method: :delete %></td>
+            </tr>
+          </tbody>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+  <% end %>
