@@ -14,8 +14,6 @@
         <th>Amount</th>
         <th>Exchange Currency</th>
         <th>Created at</th>
-        <th>Rate</th>
-        <th>Result</th>
       </tr>
       </thead>
       <% @collection.each do |f| %>
@@ -25,8 +23,6 @@
               <td><%="#{f.amount} #{f.base_currency}"%></td>
               <td><%= f.exchange_currency %></td>
               <td><%= f.created_at.to_datetime.strftime("%Y-%m-%d") %></td>
-              <td><%= f.api_response[f.exchange_currency] %></td>
-              <td><%= f.api_response[f.exchange_currency].to_f * f.amount %></td>
               <td><%= link_to "View", exchange_path(f) %></td>
               <td><%= link_to "Edit", edit_exchange_path(f) %></td>
               <td><%= link_to "Delete", exchange_path(f), method: :delete %></td>

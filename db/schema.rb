@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_110452) do
+ActiveRecord::Schema.define(version: 2019_08_19_073301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,21 @@ ActiveRecord::Schema.define(version: 2019_08_16_110452) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "amount"
-    t.date "exchange_date"
     t.integer "base_currency"
     t.integer "exchange_currency"
     t.bigint "user_id"
     t.json "api_response"
+    t.integer "duration"
     t.index ["user_id"], name: "index_exchanges_on_user_id"
+  end
+
+  create_table "latest_rates", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "base_currency"
+    t.integer "exchange_currency"
+    t.decimal "rate"
+    t.date "rate_date"
   end
 
   create_table "users", force: :cascade do |t|

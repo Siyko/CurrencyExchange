@@ -4,4 +4,31 @@
   <h2> Exchange </h2>
   <h3> Date: <%= @resource.created_at.strftime("%Y-%m-%d") %></h3>
   <h3> <%= "From #{@resource.base_currency} to #{@resource.exchange_currency}" %></h3>
+
+  <%= line_chart @resource.api_response.keys.sort.zip(@resource.api_response.values.map { |x| x.values }), discrete: true %>
+  <h3>All dates and rates</h3>
+  <table class="table">
+    <thead class="thead-default">
+      <tr>
+        <th>Day</th>
+        <th>1 <%= @resource.base_currency %></th>
+        <th><%= "#{@resource.amount} #{@resource.base_currency}" %></th>
+        <th>Profit/Loss</th>
+      </tr>
+    </thead>
+    <% @resource.api_response.sort.each do |r| %>
+    <tbody>
+      <tr>
+        <th scope="row"> <%= r.first %> </th>
+        <td><%= "#{r.last[@resource.exchange_currency]} #{@resource.exchange_currency}" %></td>
+        <td><%= r.last[@resource.exchange_currency] * @resource.amount %> <%= @resource.exchange_currency %></td>
+        <td><%= (r.last[@resource.exchange_currency] * @resource.amount) -
+          (ExchangeRatesApi.get_latest_rate(@resource.base_currency, @resource.exchange_currency) * @resource.amount) %>
+          <%= @resource.exchange_currency %></td>
+      </tr>
+      </tr>
+    </tbody>
+    <% end %>
+  </table>
+
 </div>

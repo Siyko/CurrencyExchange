@@ -16,12 +16,11 @@ class ExchangesController < ApplicationController
 
   def create
     @resource = Exchange.new(exchange_params)
-    # @resource.user_id = current_user.id
+    @resource.user_id = current_user.id
 
     # move this to ExchangeBuilder which will build whole resource
     # saving rates to json field in db to avoid queries
-    @resource.api_response = AbstractApi.new(exchange_params, FixerApi).call
-
+    @resource.api_response = AbstractApi.new(exchange_params, ExchangeRatesApi).call
 
     if @resource.save
       redirect_to @resource
@@ -52,7 +51,8 @@ class ExchangesController < ApplicationController
   private
 
   def exchange_params
-    params.require(:exchange).permit(:amount, :base_currency, :exchange_currency, :exchange_date)#.merge(user_id: current_user.id)
+    # maybe add merge to avoid ugly line #19
+    params.require(:exchange).permit(:amount, :base_currency, :exchange_currency, :duration)
   end
 
   def resource

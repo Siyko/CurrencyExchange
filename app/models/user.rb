@@ -14,6 +14,7 @@ class User < ApplicationRecord
       user.expires = auth.credentials.expires
       user.expires_at = auth.credentials.expires_at
       user.refresh_token = auth.credentials.refresh_token
+      user.password = Devise.friendly_token[0,20]
     end
   end
 end

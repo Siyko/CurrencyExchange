@@ -2,6 +2,6 @@
   <%= f.input :amount, label: 'Enter the amount', required: true, input_html: { min: 1 } %>
   <%= f.input :base_currency, selected: [ "EUR" ], collection: Exchange.base_currencies.keys,required: true %>
   <%= f.input :exchange_currency, selected: [ "USD" ], collection: Exchange.exchange_currencies.keys,required: true %>
-  <%= f.input :exchange_date, as: :string, label: 'Enter date', required: true %>
+  <%= f.input :duration, input_html: { min: 1, max: 365 }, label: 'Enter duration(days)', required: true %>
   <%= f.button :submit %>
 <% end %>
