@@ -1,6 +1,6 @@
 <%= link_to "Main Page", exchanges_path %>
 
-<div>
+<div class="container">
   <h2> Exchange </h2>
   <h3> Date: <%= @resource.created_at.strftime("%Y-%m-%d") %></h3>
   <h3> <%= "From #{@resource.base_currency} to #{@resource.exchange_currency}" %></h3>

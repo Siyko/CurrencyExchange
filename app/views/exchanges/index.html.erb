@@ -1,8 +1,8 @@
-<div>
+<div class="container">
   <div>
     <h1>CurrencyExchange</h1>
     <p>
-      <%= link_to "Create new exchange", new_exchange_path %>
+      <%= link_to "Create new exchange", new_exchange_path, class: "btn btn-success" %>
     </p>
   </div>
   <% if current_user.exchanges.count > 0 %>
@@ -23,9 +23,9 @@
               <td><%="#{f.amount} #{f.base_currency}"%></td>
               <td><%= f.exchange_currency %></td>
               <td><%= f.created_at.to_datetime.strftime("%Y-%m-%d") %></td>
-              <td><%= link_to "View", exchange_path(f) %></td>
-              <td><%= link_to "Edit", edit_exchange_path(f) %></td>
-              <td><%= link_to "Delete", exchange_path(f), method: :delete %></td>
+              <td><%= link_to "View", exchange_path(f), class: "btn btn-info" %></td>
+              <td><%= link_to "Edit", edit_exchange_path(f), class: "btn btn-warning" %></td>
+              <td><%= link_to "Delete", exchange_path(f), method: :delete, class: "btn btn-danger" %></td>
             </tr>
           </tbody>
         <% end %>
