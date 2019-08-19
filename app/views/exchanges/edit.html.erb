@@ -1,5 +1,7 @@
-<h1>Edit Exchange</h1>
+<div class="container">
+  <h1>Edit Exchange</h1>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Delete Exchange', exchange_path(@resource), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+  <%= link_to 'Delete Exchange', exchange_path(@resource), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+</div>
