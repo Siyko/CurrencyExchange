@@ -1,6 +1,8 @@
 class ExchangesController < ApplicationController
   before_action :resource, only: [:edit, :update, :destroy, :show]
 
+  skip_before_action :authenticate_user!
+
   #
   # Need to add decorator(Draper) to avoid ugly code in views and controllers
   # Decorated resource will have additional fields like 'rate', 'result' etc
@@ -48,7 +50,37 @@ class ExchangesController < ApplicationController
     redirect_to exchanges_path
   end
 
+  def csv_download
+    # Tell Rack to stream the content
+    headers.delete("Content-Length")
+
+    # Don't cache anything from this generated endpoint
+    headers["Cache-Control"] = "no-cache"
+
+    # Tell the browser this is a CSV file
+    headers["Content-Type"] = "text/csv"
+
+    # Make the file download with a specific filename
+    headers["Content-Disposition"] = "attachment; filename=\"example.csv\""
+
+    # Don't buffer when going through proxy servers
+    headers["X-Accel-Buffering"] = "no"
+
+    # Set an Enumerator as the body
+    self.response_body = body
+
+    # Set the status to success
+    response.status = 200
+  end
+
   private
+  def body
+    Enumerator.new do |yielder|
+      2000000.times do |num|
+        yielder << CSV.generate_line([num, "yay"])
+      end
+    end
+  end
 
   def exchange_params
     # maybe add merge to avoid ugly line #19
